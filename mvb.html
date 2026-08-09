@@ -1,0 +1,1334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Wizarding World of Harry Potter</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap');
+        * {
+            margin: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Cormorant Garamond', serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 25%, #16213e 50%, #2c1810 75%, #0f0f0f 100%);
+            color: #f8f6f0;
+            line-height: 1.8;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+        header {
+            text-align: center;
+            padding: 100px 0 60px;
+            position: relative;
+            background: radial-gradient(ellipse at center, rgba(139, 69, 19, 0.1) 0%, transparent 70%);
+        }
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background:
+                radial-gradient(2px 2px at 20px 30px, #d4af37, transparent),
+                radial-gradient(2px 2px at 40px 70px, #ffd700, transparent),
+                radial-gradient(1px 1px at 90px 40px, #b8860b, transparent),
+                radial-gradient(1px 1px at 130px 80px, #daa520, transparent),
+                radial-gradient(2px 2px at 160px 30px, #ffd700, transparent),
+                radial-gradient(1px 1px at 200px 60px, #d4af37, transparent),
+                radial-gradient(1px 1px at 30px 120px, #ffd700, transparent),
+                radial-gradient(2px 2px at 80px 100px, #b8860b, transparent),
+                radial-gradient(1px 1px at 120px 120px, #daa520, transparent),
+                radial-gradient(2px 2px at 170px 100px, #ffd700, transparent);
+            background-repeat: repeat;
+            background-size: 200px 200px;
+            animation: twinkle 6s ease-in-out infinite, drift 20s linear infinite;
+            opacity: 0.4;
+        }
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background:
+                radial-gradient(1px 1px at 25px 25px, #ffd700, transparent),
+                radial-gradient(2px 2px at 75px 50px, #d4af37, transparent),
+                radial-gradient(1px 1px at 125px 25px, #b8860b, transparent),
+                radial-gradient(1px 1px at 175px 75px, #daa520, transparent),
+                radial-gradient(2px 2px at 225px 25px, #ffd700, transparent),
+                radial-gradient(1px 1px at 25px 100px, #d4af37, transparent),
+                radial-gradient(1px 1px at 100px 100px, #ffd700, transparent),
+                radial-gradient(2px 2px at 150px 100px, #b8860b, transparent),
+                radial-gradient(1px 1px at 200px 150px, #daa520, transparent),
+                radial-gradient(1px 1px at 50px 175px, #ffd700, transparent);
+            background-repeat: repeat;
+            background-size: 250px 250px;
+            animation: twinkle-alt 8s ease-in-out infinite, drift-reverse 25s linear infinite;
+            opacity: 0.3;
+            pointer-events: none;
+            z-index: -1;
+        }
+        @keyframes twinkle {
+            0%,
+            100% {
+                opacity: 0.2;
+                transform: scale(1);
+            }
+            25% {
+                opacity: 0.8;
+                transform: scale(1.1);
+            }
+            50% {
+                opacity: 0.4;
+                transform: scale(0.9);
+            }
+            75% {
+                opacity: 0.9;
+                transform: scale(1.05);
+            }
+        }
+        @keyframes twinkle-alt {
+            0%,
+            100% {
+                opacity: 0.1;
+                transform: scale(0.8);
+            }
+            33% {
+                opacity: 0.6;
+                transform: scale(1.2);
+            }
+            66% {
+                opacity: 0.3;
+                transform: scale(0.95);
+            }
+        }
+        @keyframes drift {
+            0% {
+                transform: translateX(0px) translateY(0px);
+            }
+            25% {
+                transform: translateX(-10px) translateY(-5px);
+            }
+            50% {
+                transform: translateX(5px) translateY(-10px);
+            }
+            75% {
+                transform: translateX(-5px) translateY(5px);
+            }
+            100% {
+                transform: translateX(0px) translateY(0px);
+            }
+        }
+        @keyframes drift-reverse {
+            0% {
+                transform: translateX(0px) translateY(0px);
+            }
+            25% {
+                transform: translateX(8px) translateY(3px);
+            }
+            50% {
+                transform: translateX(-3px) translateY(8px);
+            }
+            75% {
+                transform: translateX(3px) translateY(-3px);
+            }
+            100% {
+                transform: translateX(0px) translateY(0px);
+            }
+        }
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 4.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #d4af37 0%, #ffd700 50%, #b8860b 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 30px rgba(212, 175, 55, 0.3);
+            margin-bottom: 30px;
+            letter-spacing: 2px;
+            position: relative;
+            z-index: 1;
+        }
+        .subtitle {
+            font-size: 1.6rem;
+            color: #e8dcc0;
+            font-style: italic;
+            font-weight: 300;
+            margin-bottom: 40px;
+            opacity: 0.9;
+            letter-spacing: 1px;
+        }
+        .nav-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-bottom: 60px;
+            flex-wrap: wrap;
+        }
+        .tab-btn {
+            background: linear-gradient(135deg, rgba(139, 69, 19, 0.2), rgba(160, 82, 45, 0.3));
+            color: #d4af37;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            padding: 20px 40px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-family: 'Playfair Display', serif;
+            font-weight: 600;
+            font-size: 1.3rem;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            text-transform: capitalize;
+            letter-spacing: 1px;
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+        .tab-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.2), transparent);
+            transition: left 0.6s ease;
+        }
+        .tab-btn:hover::before {
+            left: 100%;
+        }
+        .tab-btn:hover,
+        .tab-btn.active {
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.15), rgba(255, 215, 0, 0.2));
+            color: #ffd700;
+            border-color: rgba(255, 215, 0, 0.6);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.2);
+        }
+        .content-section {
+            display: none;
+            animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .content-section.active {
+            display: block;
+        }
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 40px;
+            margin-bottom: 80px;
+        }
+        .card {
+            background: linear-gradient(145deg, rgba(26, 26, 46, 0.4), rgba(44, 24, 16, 0.3));
+            border-radius: 20px;
+            padding: 40px;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(15px);
+        }
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.05) 0%, transparent 50%, rgba(255, 215, 0, 0.03) 100%);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        .card:hover::before {
+            opacity: 1;
+        }
+        .card:hover {
+            transform: translateY(-8px) scale(1.02);
+            border-color: rgba(212, 175, 55, 0.4);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3), 0 0 40px rgba(212, 175, 55, 0.1);
+        }
+        .card-header {
+            display: flex;
+            margin-bottom: 20px;
+            align-items: flex-start;
+        }
+        .poster-container {
+            width: 120px;
+            height: 180px;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+            transition: all 0.3s ease;
+            background: linear-gradient(145deg, rgba(26, 26, 46, 0.6), rgba(44, 24, 16, 0.5));
+            flex-shrink: 0;
+            margin-right: 20px;
+        }
+        .poster-container:hover {
+            transform: scale(1.05);
+            box-shadow: 0 12px 35px rgba(212, 175, 55, 0.2);
+        }
+        .poster-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+        .title-info {
+            flex: 1;
+        }
+        .card h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #d4af37;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+            line-height: 1.3;
+        }
+        .author {
+            font-size: 1.1rem;
+            color: #e8dcc0;
+            margin-bottom: 5px;
+            font-weight: 400;
+        }
+        .author strong {
+            color: #d4af37;
+        }
+        .card-details {
+            margin-bottom: 25px;
+        }
+        .card p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #e8dcc0;
+            font-weight: 300;
+        }
+        .card-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background: linear-gradient(135deg, rgba(139, 69, 19, 0.3), rgba(160, 82, 45, 0.4));
+            color: #d4af37;
+            padding: 20px 40px;
+            border-radius: 35px;
+            text-decoration: none;
+            font-weight: 600;
+            font-family: 'Playfair Display', serif;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            z-index: 1;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            backdrop-filter: blur(10px);
+            font-size: 1.3rem;
+            cursor: pointer;
+            width: 220px;
+            min-height: 70px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+        .card-link::after {
+            content: '→';
+            transition: transform 0.3s ease;
+            font-size: 1.4rem;
+        }
+        .card-link:hover {
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.2), rgba(255, 215, 0, 0.3));
+            color: #ffd700;
+            transform: translateX(5px) translateY(-3px);
+            border-color: rgba(255, 215, 0, 0.5);
+            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.3);
+        }
+        .card-link:hover::after {
+            transform: translateX(5px);
+        }
+        .movie-links {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 15px;
+        }
+        footer {
+            text-align: center;
+            padding: 80px 0 60px;
+            border-top: 1px solid rgba(212, 175, 55, 0.2);
+            margin-top: 100px;
+            background: linear-gradient(135deg, rgba(26, 26, 46, 0.2), rgba(44, 24, 16, 0.1));
+        }
+        .quote {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+            font-style: italic;
+            color: #e8dcc0;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        .author {
+            font-size: 1.1rem;
+            color: #d4af37;
+            font-weight: 400;
+        }
+        .magic-wand {
+            display: inline-block;
+            font-size: 1.8rem;
+            animation: float 4s ease-in-out infinite;
+            margin: 0 15px;
+        }
+        @keyframes float {
+            0%,
+            100% {
+                transform: translateY(0px) rotate(0deg);
+            }
+            25% {
+                transform: translateY(-8px) rotate(2deg);
+            }
+            50% {
+                transform: translateY(-5px) rotate(-1deg);
+            }
+            75% {
+                transform: translateY(-10px) rotate(1deg);
+            }
+        }
+        .join-channel-box {
+            background: linear-gradient(145deg, rgba(212, 175, 55, 0.15), rgba(255, 215, 0, 0.1));
+            border: 2px solid rgba(255, 215, 0, 0.3);
+            border-radius: 15px;
+            padding: 15px 25px;
+            text-align: center;
+            margin: 0 auto 40px;
+            max-width: 700px;
+            width: 90%;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(15px);
+            animation: glow 3s ease-in-out infinite;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        @keyframes glow {
+            0%,
+            100% {
+                box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
+            }
+            50% {
+                box-shadow: 0 0 25px rgba(212, 175, 55, 0.6);
+            }
+        }
+        .join-channel-box::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 215, 0, 0.05) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+        }
+        @keyframes rotate {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+        .join-channel-box h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #ffd700;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+        }
+        .join-channel-box p {
+            font-size: 1.15rem;
+            color: #f8f6f0;
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 1;
+        }
+        .join-channel-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.4), rgba(255, 215, 0, 0.5));
+            color: #0a0a0a;
+            padding: 12px 25px;
+            border-radius: 40px;
+            text-decoration: none;
+            font-weight: 700;
+            font-family: 'Playfair Display', serif;
+            font-size: 1rem;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            z-index: 1;
+            border: 2px solid rgba(255, 215, 0, 0.6);
+            backdrop-filter: blur(10px);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .join-channel-btn::after {
+            content: '✨';
+            transition: transform 0.3s ease;
+        }
+        .join-channel-btn:hover {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.6), rgba(255, 223, 0, 0.7));
+            transform: translateY(-3px) scale(1.05);
+            border-color: rgba(255, 255, 255, 0.8);
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.4);
+        }
+        .join-channel-btn:hover::after {
+            transform: rotate(360deg);
+        }
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 20px;
+            }
+            h1 {
+                font-size: 3rem;
+            }
+            .grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            .nav-tabs {
+                flex-direction: column;
+                align-items: center;
+                gap: 20px;
+            }
+            .tab-btn {
+                padding: 18px 35px;
+                font-size: 1.2rem;
+            }
+            .card {
+                padding: 30px;
+            }
+            .card-header {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+            .poster-container {
+                margin-right: 0;
+                margin-bottom: 15px;
+            }
+            .card-link {
+                width: 200px;
+                min-height: 65px;
+                font-size: 1.2rem;
+                padding: 18px 35px;
+            }
+            .join-channel-box {
+                padding: 15px;
+                margin-bottom: 30px;
+                max-width: 350px;
+                flex-direction: column;
+                text-align: center;
+            }
+            .join-channel-box p {
+                font-size: 1.1rem;
+                margin-bottom: 20px;
+            }
+            .join-channel-btn {
+                padding: 10px 20px;
+                font-size: 0.9rem;
+            }
+            .books-notice-box {
+                padding: 10px;
+                margin-bottom: 25px;
+                max-width: 320px;
+            }
+            .books-notice-box p {
+                font-size: 1rem;
+            }
+            .books-notice-box p span {
+                font-size: 1.1rem;
+            }
+        }
+        .audio-join-box {
+            background: linear-gradient(145deg, rgba(212, 175, 55, 0.15), rgba(255, 215, 0, 0.1));
+            border: 2px solid rgba(255, 215, 0, 0.3);
+            border-radius: 15px;
+            padding: 15px 25px;
+            text-align: center;
+            margin: 0 auto 40px;
+            max-width: 700px;
+            width: 90%;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(15px);
+            animation: glow 3s ease-in-out infinite;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .join-channel-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            z-index: 2;
+            width: 100%;
+        }
+        .join-channel-text {
+            flex: 1;
+            padding-right: 20px;
+            text-align: left;
+        }
+        .audio-join-box h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #ffd700;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+            text-shadow: none;
+        }
+        .audio-join-box p {
+            font-size: 1.15rem;
+            color: #f8f6f0;
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 1;
+            max-width: 100%;
+        }
+        .magic-sparkles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background-image:
+                radial-gradient(2px 2px at 20px 30px, #ffd700, transparent),
+                radial-gradient(2px 2px at 40px 70px, rgba(255, 215, 0, 0.8), transparent),
+                radial-gradient(1px 1px at 50px 90px, #d4af37, transparent),
+                radial-gradient(1px 1px at 130px 80px, rgba(212, 175, 55, 0.6), transparent),
+                radial-gradient(2px 2px at 80px 10px, #ffd700, transparent);
+            background-repeat: repeat;
+            background-size: 200px 200px;
+            animation: sparkle 8s linear infinite;
+            opacity: 0.6;
+            z-index: 1;
+        }
+        @media (max-width: 768px) {
+            .join-channel-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            .join-channel-text {
+                padding-right: 0;
+                margin-bottom: 20px;
+                text-align: center;
+            }
+            .audio-join-box {
+                padding: 15px;
+                margin-bottom: 30px;
+                max-width: 350px;
+            }
+            .audio-join-box h3 {
+                font-size: 1.4rem;
+            }
+            .audio-join-box p {
+                font-size: 1.1rem;
+            }
+        }
+        /* Scrollbar styling */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(26, 26, 46, 0.3);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #d4af37, #b8860b);
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, #ffd700, #d4af37);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>✦ The Wizarding World ✦</h1>
+            <p class="subtitle">An Aesthetic Journey Through Harry Potter</p>
+        </div>
+    </header>
+    <main class="container">
+        <nav class="nav-tabs">
+            <button class="tab-btn active" onclick="showSection('movies')">🎬 Movies</button>
+            <button class="tab-btn" onclick="showSection('books')">📚 Books</button>
+            <button class="tab-btn" onclick="showSection('audio')">🎵 Audio</button>
+        </nav>
+        <section id="movies" class="content-section active">
+            <div class="join-channel-box">
+                <p>Access all Harry Potter movies by joining Telegram channel first</p>
+                <a href="https://t.me/+IxBKRSJf9fVlOTY1" class="join-channel-btn" target="_blank">Join Now</a>
+            </div>
+            <div class="grid">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="poster-container">
+                            <img src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcQttbZNVGzKnwLBGXrKBkt0VY2J2DubjnH_lSQrJCzdSf5fe4OK8yUM27EYhteFc68Ii7Xr9g"
+                                alt="Harry Potter and the Philosopher's Stone Poster">
+                        </div>
+                        <div class="title-info">
+                            <h3>Harry Potter and the Philosopher's Stone (2001)</h3>
+                        </div>
+                    </div>
+                    <div class="card-details">
+                        <p><strong>Director:</strong> Chris Columbus<br>
+                            <strong>Runtime:</strong> 152 minutes<br><br>
+                            Harry discovers he's a wizard and begins his journey at Hogwarts. With new friends Ron and
+                            Hermione, he uncovers the mystery of the Sorcerer's Stone while facing dark forces that
+                            threaten the wizarding world in this enchanting introduction.
+                        </p>
+                    </div>
+                    <div class="movie-links">
+                        <a href="https://t.me/c/1988894219/1774" class="card-link" target="_blank">Watch</a>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <div class="poster-container">
+                            <img src="https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcT1rI0fB3GdfQCFT3HYWrIIreGt74rV1R0n8JgYUmXtzMeOCdIKv4MdmSafc0hi7DksbRtO"
+                                alt="Harry Potter and the Chamber of Secrets Poster">
+                        </div>
+                        <div class="title-info">
+                            <h3>Harry Potter and the Chamber of Secrets (2002)</h3>
+                        </div>
+                    </div>
+                    <div class="card-details">
+                        <p><strong>Director:</strong> Chris Columbus<br>
+                            <strong>Runtime:</strong> 161 minutes<br><br>
+                            Students are mysteriously petrified as whispers of Slytherin's heir spread through Hogwarts.
+                            Harry's ability to speak Parseltongue makes many suspect him, leading him to uncover the
+                            truth behind the Chamber of secrets.
+                        </p>
+                    </div>
+                    <div class="movie-links">
+                        <a href="https://t.me/c/1988894219/1776" class="card-link" target="_blank">Watch</a>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <div class="poster-container">
+                            <img src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcTgkdZmW7dz8EAUAZ_QfYb_fUa0_Nd4jmHCD6wKjjVIuS4ci-J5ChWg630iacWfrAU9Ko_lng"
+                                alt="Harry Potter and the Prisoner of Azkaban Poster">
+                        </div>
+                        <div class="title-info">
+                            <h3>Harry Potter and the Prisoner of Azkaban (2004)</h3>
+                        </div>
+                    </div>
+                    <div class="card-details">
+                        <p><strong>Director:</strong> Alfonso Cuarón<br>
+                            <strong>Runtime:</strong> 142 minutes<br><br>
+                            Sirius Black escapes from Azkaban prison, believed to be hunting Harry. This darker
+                            installment introduces the Marauder's Map, Dementors, and time travel as Harry learns the
+                            truth about his parents' betrayal.
+                        </p>
+                    </div>
+                    <div class="movie-links">
+                        <a href="https://t.me/c/1988894219/1777" class="card-link" target="_blank">Watch</a>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <div class="poster-container">
+                            <img src="https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcRIb7EKKYfM0tX2pE8nrzP-LBo3AiBgLyJN_HuKX7GId7Ca84Ygzf8tTQ-rmcr4SG5Uww08yw"
+                                alt="Harry Potter and the Goblet of Fire Poster">
+                        </div>
+                        <div class="title-info">
+                            <h3>Harry Potter and the Goblet of Fire (2005)</h3>
+                        </div>
+                    </div>
+                    <div class="card-details">
+                        <p><strong>Director:</strong> Mike Newell<br>
+                            <strong>Runtime:</strong> 157 minutes<br><br>
+                            Hogwarts hosts the Triwizard Tournament, bringing magical schools together. When Harry's
+                            name emerges from the Goblet, he faces deadly challenges including dragons, merpeople, and a
+                            maze, leading to Voldemort's return.
+                        </p>
+                    </div>
+                    <div class="movie-links">
+                        <a href="https://t.me/c/1988894219/1778" class="card-link" target="_blank">Watch</a>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <div class="poster-container">
+                            <img src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcTMf2sXnLj2uQ9eqOTGYN5Djelr3u2ElmI2pJM6t5cGjcXs1IvRHeFUmOpNTVyaQj1OMYl-"
+                                alt="Harry Potter and the Order of the Phoenix Poster">
+                        </div>
+                        <div class="title-info">
+                            <h3>Harry Potter and the Order of the Phoenix (2007)</h3>
+                        </div>
+                    </div>
+                    <div class="card-details">
+                        <p><strong>Director:</strong> David Yates<br>
+                            <strong>Runtime:</strong> 138 minutes<br><br>
+                            The Ministry denies Voldemort's return, creating a climate of fear at Hogwarts. Under
+                            Umbridge's tyrannical rule, Harry forms Dumbledore's Army to teach defense magic, leading to
+                            a devastating battle at the Department of Mysteries.
+                        </p>
+                    </div>
+                    <div class="movie-links">
+                        <a href="https://t.me/c/1988894219/1779" class="card-link" target="_blank">Watch</a>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <div class="poster-container">
+                            <img src="https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcSClXpbXL6boTZrzmNmoBKtUTFcW5xLLosR_4GiMgGiR7IaLg32"
+                                alt="Harry Potter and the Half-Blood Prince Poster">
+                        </div>
+                        <div class="title-info">
+                            <h3>Harry Potter and the Half-Blood Prince (2009)</h3>
+                        </div>
+                    </div>
+                    <div class="card-details">
+                        <p><strong>Director:</strong> David Yates<br>
+                            <strong>Runtime:</strong> 153 minutes<br><br>
+                            Dumbledore guides Harry through memories revealing Voldemort's past and Horcruxes. Amidst
+                            teenage romances and growing darkness, Harry becomes obsessed with Draco's suspicious
+                            activities, building to a shocking betrayal.
+                        </p>
+                    </div>
+                    <div class="movie-links">
+                        <a href="https://t.me/c/1988894219/1780" class="card-link" target="_blank">Watch</a>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <div class="poster-container">
+                            <img src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcT5SQRguD8Y8UKCPpSAGzMhIXaYQKBmUOSGNbnZFp_a6DgctEi5"
+                                alt="Harry Potter and the Deathly Hallows – Part 1 Poster">
+                        </div>
+                        <div class="title-info">
+                            <h3>Harry Potter and the Deathly Hallows – Part 1 (2010)</h3>
+                        </div>
+                    </div>
+                    <div class="card-details">
+                        <p><strong>Director:</strong> David Yates<br>
+                            <strong>Runtime:</strong> 146 minutes<br><br>
+                            The trio abandons Hogwarts to hunt Voldemort's Horcruxes. Without protection, they face
+                            isolation, danger, and the growing darkness of the wizarding world, testing their friendship
+                            and resolve to their absolute limits.
+                        </p>
+                    </div>
+                    <div class="movie-links">
+                        <a href="https://t.me/c/1988894219/1781" class="card-link" target="_blank">Watch</a>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <div class="poster-container">
+                            <img src="https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcSSlSExFIvcvi2ApveKqndbtB9cI5V2IneqF79KoSKqzWxfU3nt"
+                                alt="Harry Potter and the Deathly Hallows – Part 2 Poster">
+                        </div>
+                        <div class="title-info">
+                            <h3>Harry Potter and the Deathly Hallows – Part 2 (2011)</h3>
+                        </div>
+                    </div>
+                    <div class="card-details">
+                        <p><strong>Director:</strong> David Yates<br>
+                            <strong>Runtime:</strong> 130 minutes<br><br>
+                            The epic conclusion begins with a Gringotts break-in and culminates in the Battle of
+                            Hogwarts. Harry confronts his mortality, discovers Snape's truth, and makes the ultimate
+                            sacrifice in his final confrontation with Voldemort.
+                        </p>
+                    </div>
+                    <div class="movie-links">
+                        <a href="https://t.me/c/1988894219/1783" class="card-link" target="_blank">Watch</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section id="books" class="content-section">
+            <div class="grid">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="poster-container">
+                            <img src="https://upload.wikimedia.org/wikipedia/en/6/6b/Harry_Potter_and_the_Philosopher%27s_Stone_Book_Cover.jpg"
+                                alt="Harry Potter and the Philosopher's Stone Book Cover">
+                        </div>
+                        <div class="title-info">
+                            <h3>Harry Potter and the Philosopher's Stone (1997)</h3>
+                            <p class="author"><strong>Author:</strong> J.K. Rowling</p>
+                        </div>
+                    </div>
+                    <div class="card-details">
+                        <p><strong>Publisher:</strong> Bloomsbury (UK), Scholastic (US)<br>
+                            <strong>Pages:</strong>228 pages<br><br>
+                            Harry discovers he's a wizard and begins his journey at Hogwarts. With new friends and
+                            magical adventures, he uncovers the mystery of the Philosopher's Stone while facing the dark
+                            forces that threaten the wizarding world.
+                        </p>
+                    </div>
+                    <div class="movie-links">
+                        <a href="https://drive.google.com/file/d/1CAE9kwQJf9CFtieixGWeRL148mcspvK6/view?usp=drivesdk"
+                            class="card-link" target="_blank">Read</a>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <div class="poster-container">
+                            <img src="https://upload.wikimedia.org/wikipedia/en/thumb/5/5c/Harry_Potter_and_the_Chamber_of_Secrets.jpg/250px-Harry_Potter_and_the_Chamber_of_Secrets.jpg"
+                                alt="Harry Potter and the Chamber of Secrets Book Cover">
+                        </div>
+                        <div class="title-info">
+                            <h3>Harry Potter and the Chamber of Secrets (1998)</h3>
+                            <p class="author"><strong>Author:</strong> J.K. Rowling</p>
+                        </div>
+                    </div>
+                    <div class="card-details">
+                        <p><strong>Publisher:</strong> Bloomsbury (UK), Scholastic (US)<br>
+                            <strong>Pages:</strong> 251 pages<br><br>
+                            Students are mysteriously petrified as the legend of Slytherin's heir resurfaces. Harry's
+                            ability to speak Parseltongue makes him a suspect, leading him to uncover the truth behind
+                            the Chamber of Secrets.
+                        </p>
+                    </div>
+                    <div class="movie-links">
+                        <a href="https://drive.google.com/file/d/1Cj_CpEZGCKHAAaBEvDIFcLaE9uYW_Qbb/view?usp=drivesdk"
+                            class="card-link" target="_blank">Read</a>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <div class="poster-container">
+                            <img src="https://upload.wikimedia.org/wikipedia/en/a/a0/Harry_Potter_and_the_Prisoner_of_Azkaban.jpg"
+                                alt="Harry Potter and the Prisoner of Azkaban Book Cover">
+                        </div>
+                        <div class="title-info">
+                            <h3>Harry Potter and the Prisoner of Azkaban (1999)</h3>
+                            <p class="author"><strong>Author:</strong> J.K. Rowling</p>
+                        </div>
+                    </div>
+                    <div class="card-details">
+                        <p><strong>Publisher:</strong> Bloomsbury (UK), Scholastic (US)<br>
+                            <strong>Pages:</strong> 317 pages<br><br>
+                            Sirius Black escapes from prison, believed to be hunting Harry. This installment introduces
+                            time travel, the Marauder's Map, and Dementors as Harry learns the truth about his parents'
+                            betrayal and the nature of justice.
+                        </p>
+                    </div>
+                    <div class="movie-links">
+                        <a href="https://drive.google.com/file/d/1Cc_76A9Chm87b-0bDk1D1WzLmGbtUWlh/view?usp=drivesdk"
+                            class="card-link" target="_blank">Read</a>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <div class="poster-container">
+                            <img src="https://upload.wikimedia.org/wikipedia/en/thumb/b/b6/Harry_Potter_and_the_Goblet_of_Fire_cover.png/250px-Harry_Potter_and_the_Goblet_of_Fire_cover.png"
+                                alt="Harry Potter and the Goblet of Fire Book Cover">
+                        </div>
+                        <div class="title-info">
+                            <h3>Harry Potter and the Goblet of Fire (2000)</h3>
+                            <p class="author"><strong>Author:</strong> J.K. Rowling</p>
+                        </div>
+                    </div>
+                    <div class="card-details">
+                        <p><strong>Publisher:</strong> Bloomsbury (UK), Scholastic (US)<br>
+                            <strong>Pages:</strong> 636 pages<br><br>
+                            The Triwizard Tournament brings magical schools together. When Harry's name emerges from the
+                            Goblet, he faces deadly challenges leading to Voldemort's return and the beginning of the
+                            Second Wizarding War.
+                        </p>
+                    </div>
+                    <div class="movie-links">
+                        <a href="https://drive.google.com/file/d/1CZfVFzNsr05Oq9CUQqFF4jBvxL5Nzhch/view?usp=drivesdk"
+                            class="card-link" target="_blank">Read</a>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <div class="poster-container">
+                            <img src="https://upload.wikimedia.org/wikipedia/en/thumb/7/70/Harry_Potter_and_the_Order_of_the_Phoenix.jpg/250px-Harry_Potter_and_the_Order_of_the_Phoenix.jpg"
+                                alt="Harry Potter and the Order of the Phoenix Book Cover">
+                        </div>
+                        <div class="title-info">
+                            <h3>Harry Potter and the Order of the Phoenix (2003)</h3>
+                            <p class="author"><strong>Author:</strong> J.K. Rowling</p>
+                        </div>
+                    </div>
+                    <div class="card-details">
+                        <p><strong>Publisher:</strong> Bloomsbury (UK), Scholastic (US)<br>
+                            <strong>Pages:</strong> 891 pages<br><br>
+                            The Ministry denies Voldemort's return, creating oppression at Hogwarts. Harry forms
+                            Dumbledore's Army to teach defense magic, leading to a devastating battle and the loss of
+                            someone dear to him.
+                        </p>
+                    </div>
+                    <div class="movie-links">
+                        <a href="https://drive.google.com/file/d/1CElkZ8ZchFar-c-3qDlnOG9AdJjGU3cb/view?usp=drivesdk"
+                            class="card-link" target="_blank">Read</a>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <div class="poster-container">
+                            <img src="https://upload.wikimedia.org/wikipedia/en/thumb/b/b5/Harry_Potter_and_the_Half-Blood_Prince_cover.png/250px-Harry_Potter_and_the_Half-Blood_Prince_cover.png"
+                                alt="Harry Potter and the Half-Blood Prince Book Cover">
+                        </div>
+                        <div class="title-info">
+                            <h3>Harry Potter and the Half-Blood Prince (2005)</h3>
+                            <p class="author"><strong>Author:</strong> J.K. Rowling</p>
+                        </div>
+                    </div>
+                    <div class="card-details">
+                        <p><strong>Publisher:</strong> Bloomsbury (UK), Scholastic (US)<br>
+                            <strong>Pages:</strong> 671 pages<br><br>
+                            Dumbledore guides Harry through memories revealing Voldemort's past and Horcruxes. Amidst
+                            teenage romances and growing darkness, Harry becomes obsessed with Draco's activities,
+                            building to a shocking betrayal.
+                        </p>
+                    </div>
+                    <div class="movie-links">
+                        <a href="https://drive.google.com/file/d/1Cy6qdhg7qJT3XhJfhW5m_ag2CGuCBHIc/view?usp=drivesdk"
+                            class="card-link" target="_blank">Read</a>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <div class="poster-container">
+                            <img src="https://upload.wikimedia.org/wikipedia/en/a/a9/Harry_Potter_and_the_Deathly_Hallows.jpg"
+                                alt="Harry Potter and the Deathly Hallows Book Cover">
+                        </div>
+                        <div class="title-info">
+                            <h3>Harry Potter and the Deathly Hallows (2007)</h3>
+                            <p class="author"><strong>Author:</strong> J.K. Rowling</p>
+                        </div>
+                    </div>
+                    <div class="card-details">
+                        <p><strong>Publisher:</strong> Bloomsbury (UK), Scholastic (US)<br>
+                            <strong>Pages:</strong> 768 pages<br><br>
+                            Harry, Ron, and Hermione hunt Voldemort's Horcruxes beyond Hogwarts. Their journey tests
+                            their friendship and courage to the limits, culminating in the final battle between good and
+                            evil at Hogwarts.
+                        </p>
+                    </div>
+                    <div class="movie-links">
+                        <a href="https://drive.google.com/file/d/1Cdf_N5MqLlxY3O7EvKhUcQWJfjhKjZM4/view?usp=drivesdk"
+                            class="card-link" target="_blank">Read</a>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <div class="poster-container">
+                            <img src="https://upload.wikimedia.org/wikipedia/en/thumb/8/87/Cursed_Child_new_poster.jpg/250px-Cursed_Child_new_poster.jpg"
+                                alt="Harry Potter and the Cursed Child Book Cover">
+                        </div>
+                        <div class="title-info">
+                            <h3>Harry Potter and the Cursed Child (2016)</h3>
+                            <p class="author"><strong>Authors:</strong>Jack Thorne</p>
+                        </div>
+                    </div>
+                    <div class="card-details">
+                        <p><strong>Publisher:</strong> Little, Brown and Company (US), Sphere (UK)<br>
+                            <strong>Pages:</strong> 276 pages | <strong>Format:</strong> Play script<br><br>
+                            Nineteen years after the Battle of Hogwarts, Harry's son Albus struggles with his family
+                            legacy. Time-travel elements revisit key moments, exploring themes of family, acceptance,
+                            and the consequences of choices.
+                        </p>
+                    </div>
+                    <div class="movie-links">
+                        <a href="https://drive.google.com/file/d/1CC6ZjkJQYkfG70cgNCw6UUbEvPCMkKGg/view?usp=drivesdk"
+                            class="card-link" target="_blank">Read</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section id="audio" class="content-section">
+            <div class="join-channel-box audio-join-box">
+                <div class="join-channel-content">
+                    <div class="join-channel-text">
+                        <p>Access all Harry Potter audiobooks by joining Telegram channel</p>
+                    </div>
+                    <a href="https://t.me/harry_potter_audiobook_all" class="join-channel-btn" target="_blank">Join
+                        Now</a>
+                </div>
+                <div class="magic-sparkles"></div>
+            </div>
+            <div class="grid">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="poster-container">
+                            <img src="https://upload.wikimedia.org/wikipedia/en/6/6b/Harry_Potter_and_the_Philosopher%27s_Stone_Book_Cover.jpg"
+                                alt="Harry Potter and the Philosopher's Stone Audio Cover">
+                        </div>
+                        <div class="title-info">
+                            <h3>Harry Potter and the Philosopher's Stone (Audiobook)</h3>
+                            <p class="author"><strong>Narrator:</strong> Stephen Fry</p>
+                        </div>
+                    </div>
+                    <div class="card-details">
+                        <p>
+                            <strong>Format:</strong> Digital Audiobook<br><br>
+                            Experience the magic of Harry's first year at Hogwarts through Stephen Fry's enchanting
+                            narration. This award-winning audiobook brings the wizarding world to life with distinctive
+                            voices and perfect pacing.
+                        </p>
+                    </div>
+                    <div class="movie-links">
+                        <a href="https://t.me/harry_potter_audiobook_all/2" class="card-link" target="_blank">Listen</a>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <div class="poster-container">
+                            <img src="https://upload.wikimedia.org/wikipedia/en/thumb/5/5c/Harry_Potter_and_the_Chamber_of_Secrets.jpg/250px-Harry_Potter_and_the_Chamber_of_Secrets.jpg"
+                                alt="Harry Potter and the Chamber of Secrets Audio Cover">
+                        </div>
+                        <div class="title-info">
+                            <h3>Harry Potter and the Chamber of Secrets (Audiobook)</h3>
+                            <p class="author"><strong>Narrator:</strong> Stephen Fry</p>
+                        </div>
+                    </div>
+                    <div class="card-details">
+                        <p>
+                            <strong>Format:</strong> Digital Audiobook<br><br>
+                            Stephen Fry returns to narrate Harry's second year at Hogwarts. Follow the mystery of the
+                            Chamber of Secrets with Fry's masterful character voices and atmospheric storytelling.
+                        </p>
+                    </div>
+                    <div class="movie-links">
+                        <a href="https://t.me/harry_potter_audiobook_all/20" class="card-link"
+                            target="_blank">Listen</a>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <div class="poster-container">
+                            <img src="https://upload.wikimedia.org/wikipedia/en/a/a0/Harry_Potter_and_the_Prisoner_of_Azkaban.jpg"
+                                alt="Harry Potter and the Prisoner of Azkaban Audio Cover">
+                        </div>
+                        <div class="title-info">
+                            <h3>Harry Potter and the Prisoner of Azkaban (Audiobook)</h3>
+                            <p class="author"><strong>Narrator:</strong> Stephen Fry</p>
+                        </div>
+                    </div>
+                    <div class="card-details">
+                        <p>
+                            <strong>Format:</strong> Digital Audiobook<br><br>
+                            The darker third installment comes alive through Stephen Fry's narration. Experience the
+                            introduction of Sirius Black, Dementors, and time travel with exceptional voice acting.
+                        </p>
+                    </div>
+                    <div class="movie-links">
+                        <a href="https://t.me/harry_potter_audiobook_all/39" class="card-link"
+                            target="_blank">Listen</a>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <div class="poster-container">
+                            <img src="https://upload.wikimedia.org/wikipedia/en/thumb/b/b6/Harry_Potter_and_the_Goblet_of_Fire_cover.png/250px-Harry_Potter_and_the_Goblet_of_Fire_cover.png"
+                                alt="Harry Potter and the Goblet of Fire Audio Cover">
+                        </div>
+                        <div class="title-info">
+                            <h3>Harry Potter and the Goblet of Fire (Audiobook)</h3>
+                            <p class="author"><strong>Narrator:</strong> Stephen Fry</p>
+                        </div>
+                    </div>
+                    <div class="card-details">
+                        <p><strong>Duration:</strong> 20 hours 35 minutes<br>
+                            <strong>Format:</strong> Digital Audiobook<br><br>
+                            The Triwizard Tournament brings magical schools together. When Harry's name emerges from the
+                            Goblet, he faces deadly challenges leading to Voldemort's return and the beginning of the
+                            Second Wizarding War.
+                        </p>
+                    </div>
+                    <div class="movie-links">
+                        <a href="https://t.me/harry_potter_audiobook_all/62" class="card-link"
+                            target="_blank">Listen</a>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <div class="poster-container">
+                            <img src="https://upload.wikimedia.org/wikipedia/en/thumb/7/70/Harry_Potter_and_the_Order_of_the_Phoenix.jpg/250px-Harry_Potter_and_the_Order_of_the_Phoenix.jpg"
+                                alt="Harry Potter and the Order of the Phoenix Audio Cover">
+                        </div>
+                        <div class="title-info">
+                            <h3>Harry Potter and the Order of the Phoenix (Audiobook)</h3>
+                            <p class="author"><strong>Narrator:</strong> Stephen Fry</p>
+                        </div>
+                    </div>
+                    <div class="card-details">
+                        <p><strong>Format:</strong> Digital Audiobook<br><br>
+                            The Ministry denies Voldemort's return, creating oppression at Hogwarts. Harry forms
+                            Dumbledore's Army to teach defense magic, leading to a devastating battle and the loss of
+                            someone dear to him.
+                        </p>
+                    </div>
+                    <div class="movie-links">
+                        <a href="https://t.me/harry_potter_audiobook_all/104" class="card-link"
+                            target="_blank">Listen</a>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <div class="poster-container">
+                            <img src="https://upload.wikimedia.org/wikipedia/en/thumb/b/b5/Harry_Potter_and_the_Half-Blood_Prince_cover.png/250px-Harry_Potter_and_the_Half-Blood_Prince_cover.png"
+                                alt="Harry Potter and the Half-Blood Prince Audio Cover">
+                        </div>
+                        <div class="title-info">
+                            <h3>Harry Potter and the Half-Blood Prince (Audiobook)</h3>
+                            <p class="author"><strong>Narrator:</strong> Stephen Fry</p>
+                        </div>
+                    </div>
+                    <div class="card-details">
+                        <p><strong>Format:</strong> Digital Audiobook<br><br>
+                            Dumbledore guides Harry through memories revealing Voldemort's past and Horcruxes. Amidst
+                            teenage romances and growing darkness, Harry becomes obsessed with Draco's activities,
+                            building to a shocking betrayal.
+                        </p>
+                    </div>
+                    <div class="movie-links">
+                        <a href="https://t.me/harry_potter_audiobook_all/144" class="card-link"
+                            target="_blank">Listen</a>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <div class="poster-container">
+                            <img src="https://upload.wikimedia.org/wikipedia/en/a/a9/Harry_Potter_and_the_Deathly_Hallows.jpg"
+                                alt="Harry Potter and the Deathly Hallows Audio Cover">
+                        </div>
+                        <div class="title-info">
+                            <h3>Harry Potter and the Deathly Hallows (Audiobook)</h3>
+                            <p class="author"><strong>Narrator:</strong> Stephen Fry</p>
+                        </div>
+                    </div>
+                    <div class="card-details">
+                        <p>
+                            <strong>Format:</strong> Digital Audiobook<br><br>
+                            The epic conclusion to the Harry Potter series. Stephen Fry's narration brings the final
+                            battle between good and evil to life with emotional depth and powerful character voices.
+                        </p>
+                    </div>
+                    <div class="movie-links">
+                        <a href="https://t.me/harry_potter_audiobook_all/176" class="card-link"
+                            target="_blank">Listen</a>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <div class="poster-container">
+                            <img src="https://upload.wikimedia.org/wikipedia/en/thumb/8/87/Cursed_Child_new_poster.jpg/250px-Cursed_Child_new_poster.jpg"
+                                alt="Harry Potter and the Cursed Child Audio Cover">
+                        </div>
+                        <div class="title-info">
+                            <h3>Harry Potter and the Cursed Child (Audiobook)</h3>
+                            <p class="author"><strong>Narrator:</strong> Various Cast</p>
+                        </div>
+                    </div>
+                    <div class="card-details">
+                        <p>
+                            <strong>Format:</strong> Full Cast Audio Drama<br><br>
+                            Nineteen years after the Battle of Hogwarts, Harry's son Albus struggles with his family
+                            legacy. Time-travel elements revisit key moments, exploring themes of family, acceptance,
+                            and the consequences of choices.
+                        </p>
+                    </div>
+                    <div class="movie-links">
+                        <a href="https://t.me/harry_potter_audiobook_all/124" class="card-link"
+                            target="_blank">Listen</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <div class="container">
+            <p class="quote">
+                <span class="magic-wand">✧</span>
+                "Happiness can be found even in the darkest of times, if one only remembers to turn on the light."
+                <span class="magic-wand">✧</span>
+            </p>
+            <p class="author">Albus Percival Wulfric Brian Dumbledore</p>
+        </div>
+    </footer>
+    <script>
+        function showSection(sectionId) {
+            // Hide all sections
+            const sections = document.querySelectorAll('.content-section');
+            sections.forEach(section => {
+                section.classList.remove('active');
+            });
+            // Remove active class from all buttons
+            const buttons = document.querySelectorAll('.tab-btn');
+            buttons.forEach(button => {
+                button.classList.remove('active');
+            });
+            // Show selected section
+            document.getElementById(sectionId).classList.add('active');
+            // Add active class to clicked button
+            event.target.classList.add('active');
+        }
+        // Smooth scroll reveal animation
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+        // Observe all cards for scroll animations
+        document.querySelectorAll('.card').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(30px)';
+            card.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+            observer.observe(card);
+        });
+        // Observe join channel boxes for scroll animations
+        document.querySelectorAll('.join-channel-box, .books-notice-box').forEach(box => {
+            box.style.opacity = '0';
+            box.style.transform = 'translateY(30px)';
+            box.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+            observer.observe(box);
+        });
+        // Parallax effect for background elements
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const parallax = document.querySelector('header::before');
+            if (parallax) {
+                parallax.style.transform = `translateY(${scrolled * 0.5}px)`;
+            }
+        });
+    </script>
+    <script>(function () { function c() { var b = a.contentDocument || a.contentWindow.document; if (b) { var d = b.createElement('script'); d.innerHTML = "window.__CF$cv$params={r:'97cd003d03accde6',t:'MTc1NzQ4NzEyOS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);"; b.getElementsByTagName('head')[0].appendChild(d) } } if (document.body) { var a = document.createElement('iframe'); a.height = 1; a.width = 1; a.style.position = 'absolute'; a.style.top = 0; a.style.left = 0; a.style.border = 'none'; a.style.visibility = 'hidden'; document.body.appendChild(a); if ('loading' !== document.readyState) c(); else if (window.addEventListener) document.addEventListener('DOMContentLoaded', c); else { var e = document.onreadystatechange || function () { }; document.onreadystatechange = function (b) { e(b); 'loading' !== document.readyState && (document.onreadystatechange = e, c()) } } } })();</script>
+</body>
+</html>
