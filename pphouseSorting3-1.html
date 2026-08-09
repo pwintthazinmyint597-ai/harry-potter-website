@@ -1,0 +1,1433 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Harry Potter House Sorting Quiz</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Crimson+Text:wght@400;600&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Crimson Text', serif;
+            background: linear-gradient(#023C41, #023C41, #011B22);
+            min-height: 100vh;
+            color: #f4f4f4;
+            overflow-x: hidden;
+        }
+
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 3s infinite;
+        }
+
+        @keyframes twinkle {
+
+            0%,
+            100% {
+                opacity: 0.3;
+            }
+
+            50% {
+                opacity: 1;
+            }
+        }
+
+        .container {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .title {
+            font-family: 'Cinzel', serif;
+            font-size: 3rem;
+            font-weight: 700;
+            color: #d4af37;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-size: 1.3rem;
+            color: #c9c9c9;
+            font-style: italic;
+        }
+
+        .quiz-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            margin-bottom: 20px;
+        }
+
+        .question {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 30px;
+            text-align: center;
+            line-height: 1.6;
+        }
+
+        .options {
+            display: grid;
+            gap: 15px;
+        }
+
+        .option {
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.1rem;
+            line-height: 1.5;
+        }
+
+        .option:hover {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: #d4af37;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3);
+        }
+
+        .photo-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            padding: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .photo-card:hover {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: #d4af37;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3);
+        }
+
+        .photo-card .card-image {
+            width: 100%;
+            height: 160px;
+            /* adjust to fit */
+            border-radius: 12px;
+            margin-bottom: 10px;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        .photo-card .card-text {
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        .visual-options {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-top: 10px;
+        }
+
+        .visual-options .option {
+            min-height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        @media (max-width: 768px) {
+            .visual-options {
+                grid-template-columns: repeat(4, 1fr);
+            }
+
+            .photo-card .card-image {
+                width: 80px;
+                height: 80px;
+            }
+
+            .photo-card .card-text {
+                font-size: 0.9rem;
+            }
+
+            .title {
+                font-size: 2rem;
+            }
+
+            .quiz-card {
+                padding: 25px;
+            }
+
+            .question {
+                font-size: 1.2rem;
+            }
+
+            .option {
+                padding: 15px;
+                font-size: 1rem;
+            }
+        }
+
+        .progress {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            height: 8px;
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            background: linear-gradient(90deg, #d4af37, #f4e99b);
+            height: 100%;
+            border-radius: 10px;
+            transition: width 0.5s ease;
+        }
+
+        .result-card {
+            text-align: center;
+            display: none;
+        }
+
+        .house-crest {
+            width: 150px;
+            height: 150px;
+            margin: 0 auto 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .gryffindor {
+            background: linear-gradient(135deg, #740001, #ae0001);
+        }
+
+        .hufflepuff {
+            background: linear-gradient(135deg, #ecb939, #f0c75e);
+        }
+
+        .ravenclaw {
+            background: linear-gradient(135deg, #0e1a40, #222f5b);
+        }
+
+        .slytherin {
+            background: linear-gradient(135deg, #1a472a, #2a623d);
+        }
+
+        .house-name {
+            font-family: 'Cinzel', serif;
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .house-description {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            margin-bottom: 30px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .result-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-top: 25px;
+        }
+
+
+        .restart-btn,
+        .home-btn {
+            padding: 14px 25px;
+            border-radius: 25px;
+            font-size: 1rem;
+            font-weight: 600;
+            font-family: 'Cinzel', serif;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        
+        .restart-btn {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+
+        .home-btn {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+
+        
+        .restart-btn:hover,
+        .home-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="stars" id="stars"></div>
+
+    <div class="container" id="quiz-container">
+        <div class="header">
+            <h1 class="title">Hogwarts House Sorting</h1>
+            <p class="subtitle">Discover your true magical house</p>
+        </div>
+
+        <div class="quiz-card" id="main-quiz-card">
+            <div class="progress">
+                <div class="progress-bar" id="progress-bar"></div>
+            </div>
+            <div class="question" id="question"></div>
+            <div class="options" id="options"></div>
+        </div>
+
+        <div class="quiz-card result-card" id="result-container">
+            <img class="house-crest" id="house-crest" alt="House crest">
+            <div class="house-name" id="house-name"></div>
+            <div class="house-description" id="house-description"></div>
+            <div class="result-buttons">
+                <button class="restart-btn" onclick="restartQuiz()">Take Quiz Again</button>
+                <a href="index.html" class="home-btn">
+                🏠 Back to Home
+                </a>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // Create twinkling stars
+        function createStars() {
+            const starsContainer = document.getElementById('stars');
+            for (let i = 0; i < 100; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.width = Math.random() * 3 + 1 + 'px';
+                star.style.height = star.style.width;
+                star.style.animationDelay = Math.random() * 3 + 's';
+                starsContainer.appendChild(star);
+            }
+        }
+
+        createStars();
+
+        // Shuffle helper
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        // Example question with branching
+        const questions = [
+            {
+                question: "Which magical creature would you most like to encounter?",
+                visual: true,
+                options: [
+                    {
+                        text: "Dragon - Powerful and fearless",
+                        house: "gryffindor",
+                        image: "https://i.pinimg.com/1200x/fd/0a/5a/fd0a5ab98437fab64b85f268f56b7153.jpg",
+                        branchQuestions: [
+                            {
+                                question: "If you met a dragon, how would you react?",
+                                options: [
+                                    { text: "Try to ride it.", house: "gryffindor" },
+                                    { text: "Observe and plan.", house: "slytherin" },
+                                    { text: "Help it if hurt.", house: "hufflepuff" },
+                                    { text: "Study it from afar.", house: "ravenclaw" }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        text: "Niffler - Loyal and hardworking",
+                        house: "hufflepuff",
+                        image: "https://i.pinimg.com/736x/e9/4f/0f/e94f0f3dbcfe2fde51aa95e84bc1d71f.jpg"
+                    },
+                    {
+                        text: "Phoenix - Wise and mysterious",
+                        house: "ravenclaw",
+                        image: "https://i.pinimg.com/736x/9c/f5/6d/9cf56dfdbf848788abc76434e5bf024f.jpg"
+                    },
+                    {
+                        text: "Basilisk - Cunning and powerful",
+                        house: "slytherin",
+                        image: "https://i.pinimg.com/736x/07/73/3d/07733d7175c6a3e6310e2f60669f8aec.jpg",
+                    }
+                ]
+            },
+
+            {
+                question: "Which type of place do you feel most comfortable in?",
+                visual: true,
+                options: [
+                    {
+                        text: "Mountain trail - Adventure and bravery",
+                        house: "gryffindor",
+                        image: "https://i.pinimg.com/736x/90/8c/7a/908c7af23018f3fc0a33895564d246ab.jpg",
+                        branchQuestions: [
+                            {
+                                question: "On a mountain trail, what would you do first?",
+                                options: [
+                                    { text: "Climb to the top quickly.", house: "gryffindor" },
+                                    { text: "Plan a safe route.", house: "slytherin" },
+                                    { text: "Help others keep pace.", house: "hufflepuff" },
+                                    { text: "Observe the scenery quietly.", house: "ravenclaw" }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        text: "Countryside - Peaceful and caring",
+                        house: "hufflepuff",
+                        image: "https://i.pinimg.com/736x/f5/7d/2f/f57d2f1f3441fc149b3779e6d6d6cc45.jpg",
+                    },
+                    {
+                        text: "Library - Quiet and thoughtful",
+                        house: "ravenclaw",
+                        image: "https://i.pinimg.com/736x/09/42/1a/09421a5e5cd32d602da17a17e5102fb2.jpg"
+                    },
+
+                    {
+                        text: "City skyline - Ambitious and bold",
+                        house: "slytherin",
+                        image: "https://i.pinimg.com/1200x/ae/34/67/ae346704e44ca3587328cd08594a2308.jpg"
+                    }
+                ]
+            },
+
+            {
+                question: "Which type of food would you never say no to?",
+                visual: true,
+                options: [
+                    {
+                        text: "Spicy street food - Adventurous taste",
+                        house: "gryffindor",
+                        image: "https://i.pinimg.com/1200x/55/ec/23/55ec237a6449d4f78cf22aeb878955b6.jpg"
+                    },
+                    {
+                        text: "Freshly baked bread - Comfort and warmth",
+                        house: "hufflepuff",
+                        image: "https://i.pinimg.com/1200x/88/7a/f8/887af89b780c8666c958f53325624c1d.jpg"
+                    },
+                    {
+                        text: "Exotic sushi - Curiosity and detail",
+                        house: "ravenclaw",
+                        image: "https://i.pinimg.com/736x/6f/ac/85/6fac85173d753e624565adae7607863f.jpg",
+                        branchQuestions: [
+                            {
+                                question: "Eating sushi, what excites you most?",
+                                options: [
+                                    { text: "Trying risky flavors.", house: "gryffindor" },
+                                    { text: "Savoring calmly.", house: "hufflepuff" },
+                                    { text: "Studying each ingredient.", house: "ravenclaw" },
+                                    { text: "Impressing others by taste.", house: "slytherin" }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        text: "Luxury steak - Sophistication and ambition",
+                        house: "slytherin",
+                        image: "https://i.pinimg.com/1200x/b8/6a/4f/b86a4f247058db3b35e21003d2f753cb.jpg",
+                    }
+                ]
+            },
+
+            {
+                question: "Which hobby matches your personality the most?",
+                visual: true,
+                options: [
+                    {
+                        text: "Hiking - Courage and energy",
+                        house: "gryffindor",
+                        image: "https://i.pinimg.com/736x/75/90/21/7590219500572a37e4577de9198f6db3.jpg"
+                    },
+                    {
+                        text: "Gardening - Patience and care",
+                        house: "hufflepuff",
+                        image: "https://i.pinimg.com/736x/07/d1/9d/07d19d196d4cbca371e08ac22cb6f04d.jpg"
+                    },
+                    {
+                        text: "Reading - Curiosity and wisdom",
+                        house: "ravenclaw",
+                        image: "https://i.pinimg.com/736x/f7/ec/25/f7ec255a29894482b78acdc01c75c93b.jpg"
+                    },
+                    {
+                        text: "Chess - Strategy and ambition",
+                        house: "slytherin",
+                        image: "https://i.pinimg.com/1200x/5c/2a/d0/5c2ad074bf537d6ee969598586492aea.jpg",
+                        branchQuestions: [
+                            {
+                                question: "When playing chess, what’s your style?",
+                                options: [
+                                    { text: "Bold risky moves.", house: "gryffindor" },
+                                    { text: "Encourage others to try.", house: "hufflepuff" },
+                                    { text: "Carefully calculate strategy.", house: "ravenclaw" },
+                                    { text: "Play to dominate.", house: "slytherin" }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+
+            {
+                question: "Which type of weather do you prefer?",
+                visual: true,
+                options: [
+                    {
+                        text: "Sunny day - Optimistic and bold",
+                        house: "gryffindor",
+                        image: "https://i.pinimg.com/736x/7d/c9/3c/7dc93ca4186e1124e33fea3d9db9cc35.jpg"
+                    },
+                    {
+                        text: "Spring rain - Calm and nurturing",
+                        house: "hufflepuff",
+                        image: "https://i.pinimg.com/736x/38/e7/c8/38e7c83ad30203eb08abf641081c2080.jpg"
+                    },
+                    {
+                        text: "Snowfall - Quiet and reflective",
+                        house: "ravenclaw",
+                        image: "https://i.pinimg.com/736x/9c/b8/eb/9cb8eb51cc9097ef5c0f028e6af98110.jpg"
+                    },
+                    {
+                        text: "Thunderstorm - Intense and powerful",
+                        house: "slytherin",
+                        image: "https://i.pinimg.com/736x/d1/2f/b0/d12fb028582941e6c2135ddd01127716.jpg",
+                        branchQuestions: [
+                            {
+                                question: "During a thunderstorm, you…",
+                                options: [
+                                    { text: "Run outside to feel it.", house: "gryffindor" },
+                                    { text: "Stay cozy indoors.", house: "hufflepuff" },
+                                    { text: "Watch and think deeply.", house: "ravenclaw" },
+                                    { text: "Enjoy the raw power.", house: "slytherin" }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+
+
+            // Question 1
+            {
+                question: "When you fail at something, your reaction is:",
+                options: [
+                    { text: "At least I tried. I’ll do better next time.", house: "gryffindor" },
+                    {
+                        text: "I’ll learn from this and find another way to succeed.", house: "slytherin",
+                        branchQuestions: [
+                            {
+                                question: "How do you plan your next attempt?",
+                                options: [
+                                    { text: "Create a detailed strategy.", house: "slytherin" },
+                                    { text: "Seek advice from a mentor.", house: "ravenclaw" },
+                                    { text: "Try a bold new approach.", house: "gryffindor" },
+                                    { text: "Collaborate with friends.", house: "hufflepuff" }
+                                ]
+                            }
+                        ]
+                    },
+                    { text: "It’s okay, the effort mattered more than the result.", house: "hufflepuff" },
+                    {
+                        text: "Why did this happen? What can I learn from it?", house: "ravenclaw",
+                        branchQuestions: [
+                            {
+                                question: "After a failure, what do you focus on most?",
+                                options: [
+                                    { text: "Analyzing every detail.", house: "ravenclaw" },
+                                    { text: "Learning the key lessons.", house: "gryffindor" },
+                                    { text: "Discussing it with others.", house: "hufflepuff" },
+                                    { text: "Planning the next strategic step.", house: "slytherin" }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+
+            // Question 2
+            {
+                question: "In a group project, your role usually is:",
+                options: [
+                    { text: "The motivator and risk-taker.", house: "gryffindor" },
+                    { 
+                        text: "The planner who keeps everyone focused.", house: "slytherin",
+                        branchQuestions: [
+                            {
+                                question: "When planning, what’s your top priority?",
+                                options: [
+                                    { text: "Staying efficient and on schedule.", house: "slytherin" },
+                                    { text: "Making sure the plan benefits everyone.", house: "hufflepuff" },
+                                    { text: "Leaving room for bold changes.", house: "gryffindor" },
+                                    { text: "Designing a thoughtful and clever approach.", house: "ravenclaw" }
+                                ]
+                            }
+                        ]
+                    },
+                    { text: "The helper who ensures no one is left behind.", house: "hufflepuff" },
+                    { text: "The thinker who comes up with new ideas.", house: "ravenclaw" }
+                ]
+            },
+
+            // Question 3
+            {
+                question: "How do you make decisions?",
+                options: [
+                    { text: "I follow my gut.", house: "gryffindor" },
+                    {
+                        text: "I weigh options strategically.", house: "slytherin",
+                        branchQuestions: [
+                            {
+                                question: "When strategizing, what matters most?",
+                                options: [
+                                    { text: "Efficiency above all.", house: "slytherin" },
+                                    { text: "Long-term gains.", house: "ravenclaw" },
+                                    { text: "Minimizing risk.", house: "hufflepuff" },
+                                    { text: "Being bold and daring.", house: "gryffindor" }
+                                ]
+                            }
+                        ]
+                    },
+                    { text: "I consider how it affects others.", house: "hufflepuff" },
+                    { text: "I analyze logically and gather data.", house: "ravenclaw" }
+                ]
+            },
+
+            // Question 4
+            {
+                question: "Your approach to challenges is:",
+                options: [
+                    {
+                        text: "Jump in and figure it out as you go.", house: "gryffindor",
+                        branchQuestions: [
+                            {
+                                question: "When facing challenges, what do you focus on most?",
+                                options: [
+                                    { text: "Yes, I prefer to work alone.", house: "gryffindor" },
+                                    { text: "No, I work best with a team.", house: "hufflepuff" },
+                                    { text: "Sometimes yes, sometimes no.", house: "ravenclaw" },
+                                    { text: "Neither yes nor no — I choose what’s strategic.", house: "slytherin" }
+                                ]
+                            }
+                        ]
+                    },
+                    { text: "Plan carefully before acting.", house: "slytherin" },
+                    { text: "Collaborate and get help.", house: "hufflepuff" },
+                    { text: "Think it through and strategize.", house: "ravenclaw" }
+                ]
+            },
+
+            // Question 5
+            {
+                question: "How do you handle stress?",
+                options: [
+                    { text: "Act immediately to reduce it.", house: "gryffindor" },
+                    { text: "Find a clever way to manage it.", house: "slytherin" },
+                    {
+                        text: "Share your concerns and get support.", house: "hufflepuff",
+                        branchQuestions: [
+                            {
+                                question: "Who do you turn to first?",
+                                options: [
+                                    { text: "Close friends.", house: "hufflepuff" },
+                                    { text: "Mentors or guides.", house: "ravenclaw" },
+                                    { text: "Family.", house: "gryffindor" },
+                                    { text: "Online communities.", house: "slytherin" }
+                                ]
+                            }
+                        ]
+                    },
+                    { text: "Reflect and analyze the root cause.", house: "ravenclaw" }
+                ]
+            },
+
+            // Question 6
+            {
+                question: "Your favorite type of story:",
+                options: [
+                    { text: "Action and adventure.", house: "gryffindor" },
+                    { text: "Mystery and strategy.", house: "slytherin" },
+                    { text: "Heartwarming friendship tales.", house: "hufflepuff" },
+                    {
+                        text: "Thought-provoking, intellectual stories.", house: "ravenclaw",
+                        branchQuestions: [
+                            {
+                                question: "When enjoying a story, what do you focus on most?",
+                                options: [
+                                    { text: "Challenge the mind.", house: "ravenclaw" },
+                                    { text: "Challenge the emotions.", house: "hufflepuff" },
+                                    { text: "Both equally.", house: "gryffindor" },
+                                    { text: "Depends on mood.", house: "slytherin" }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+
+            // Question 7
+            {
+                question: "How do you react to unfairness?",
+                options: [
+                    { text: "Stand up boldly.", house: "gryffindor" },
+                    {
+                        text: "Find a clever solution.", house: "slytherin",
+                        branchQuestions: [
+                            {
+                                question: "When handling a task, what do you focus on most?",
+                                options: [
+                                    { text: "I act alone and take control myself.", house: "slytherin" },
+                                    { text: "I inspire and influence others with ideas.", house: "ravenclaw" },
+                                    { text: "I work together and support the team.", house: "hufflepuff" },
+                                    { text: "I confront problems head-on with courage.", house: "gryffindor" }
+                                ]
+                            }
+                        ]
+                    },
+                    { text: "Help those affected.", house: "hufflepuff" },
+                    { text: "Understand and explain the cause.", house: "ravenclaw" }
+                ]
+            },
+
+            // Question 8
+            {
+                question: "Your ideal free-time activity:",
+                options: [
+                    { text: "Adventure or sports.", house: "gryffindor" },
+                    { text: "Working on personal projects.", house: "slytherin" },
+                    { text: "Socializing or helping friends.", house: "hufflepuff" },
+                    { 
+                        text: "Reading, learning, or puzzles.", house: "ravenclaw",
+                        branchQuestions: [
+                            {
+                                question: "What kind of mental activity excites you most?",
+                                options: [
+                                    { text: "Solving tricky problems.", house: "ravenclaw" },
+                                    { text: "Planning clever strategies.", house: "slytherin" },
+                                    { text: "Exploring adventurous knowledge.", house: "gryffindor" },
+                                    { text: "Sharing knowledge to help others.", house: "hufflepuff" }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+
+            // Question 9
+            {
+                question: "How do you react to unexpected situations?",
+                options: [
+                    { text: "Face it head-on.", house: "gryffindor" },
+                    { text: "Devise a clever plan.", house: "slytherin" },
+                    {
+                        text: "Gather support from others.", house: "hufflepuff",
+                        branchQuestions: [
+                            {
+                                question: "When approaching a task, what do you focus on most?",
+                                options: [
+                                    { text: "Ask for advice.", house: "ravenclaw" },
+                                    { text: "Collaborate actively.", house: "hufflepuff" },
+                                    { text: "Take lead myself.", house: "gryffindor" },
+                                    { text: "Strategize with care.", house: "slytherin" }
+                                ]
+                            }
+                        ]
+                    },
+                    { text: "Analyze and understand first.", house: "ravenclaw" }
+                ]
+            },
+
+            // Question 10
+            {
+                question: "When exploring a new place:",
+                options: [
+                    { text: "Wander fearlessly.", house: "gryffindor" },
+                    { text: "Plan the route efficiently.", house: "slytherin" },
+                    { text: "Explore with friends.", house: "hufflepuff" },
+                    {
+                        text: "Study maps and history carefully.", house: "ravenclaw",
+                        branchQuestions: [
+                            {
+                                question: "When exploring new topics, what do you focus on most?",
+                                options: [
+                                    { text: "Historical knowledge.", house: "ravenclaw" },
+                                    { text: "Practical exploration.", house: "gryffindor" },
+                                    { text: "Combine both.", house: "slytherin" },
+                                    { text: "Explore socially with friends.", house: "hufflepuff" }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            // Question 11
+            {
+                question: "Your approach to learning new skills:",
+                options: [
+                    { text: "Dive in and experiment.", house: "gryffindor" },
+                    { text: "Strategize your practice.", house: "slytherin" },
+                    { text: "Learn collaboratively.", house: "hufflepuff" },
+                    {
+                        text: "Understand deeply before acting.", house: "ravenclaw",
+                        branchQuestions: [
+                            {
+                                question: "When learning something new, what do you focus on most?",
+                                options: [
+                                    { text: "Theory first.", house: "ravenclaw" },
+                                    { text: "Hands-on first.", house: "gryffindor" },
+                                    { text: "Mix both.", house: "slytherin" },
+                                    { text: "Depends on the skill.", house: "hufflepuff" }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+
+            // Question 12
+            {
+                question: "How do you respond to praise?",
+                options: [
+                    { text: "Feel proud and motivated.", house: "gryffindor" },
+                    { 
+                        text: "Analyze and aim higher.", house: "slytherin",
+                        branchQuestions: [
+                            {
+                                question: "When aiming higher, what matters most to you?",
+                                options: [
+                                    { text: "Outperform everyone.", house: "slytherin" },
+                                    { text: "Set personal milestones.", house: "ravenclaw" },
+                                    { text: "Encourage others to improve too.", house: "hufflepuff" },
+                                    { text: "Take bold actions for recognition.", house: "gryffindor" }
+                                ]
+                            }
+                        ]
+                    },
+                    { text: "Share happiness with others.", house: "hufflepuff" },
+                    { text: "Reflect and learn from it.", house: "ravenclaw" }
+                ]
+            },
+
+            // Question 13
+            {
+                question: "How do you handle a risky situation?",
+                options: [
+                    { text: "Take the risk boldly.", house: "gryffindor" },
+                    { text: "Calculate and plan.", house: "slytherin" },
+                    {
+                        text: "Ensure everyone is safe.", house: "hufflepuff",
+                        branchQuestions: [
+                            {
+                                question: "When approaching a challenge, what do you focus on most?",
+                                options: [
+                                    { text: "Caution.", house: "slytherin" },
+                                    { text: "Teamwork.", house: "hufflepuff" },
+                                    { text: "Lead bravely.", house: "gryffindor" },
+                                    { text: "Analyze carefully.", house: "ravenclaw" }
+                                ]
+                            }
+                        ]
+                    },
+                    { text: "Study and decide logically.", house: "ravenclaw" }
+                ]
+            },
+
+            // Question 14
+            {
+                question: "Your ideal project environment:",
+                options: [
+                    { text: "Fast-paced and challenging.", house: "gryffindor" },
+                    { 
+                        text: "Structured and goal-oriented.", house: "slytherin",
+                        branchQuestions: [
+                            {
+                                question: "What part of structure motivates you most?",
+                                options: [
+                                    { text: "Achieving goals efficiently.", house: "slytherin" },
+                                    { text: "Analyzing every detail.", house: "ravenclaw" },
+                                    { text: "Helping the team stay organized.", house: "hufflepuff" },
+                                    { text: "Taking bold initiatives within the plan.", house: "gryffindor" }
+                                ]
+                            }
+                        ]
+                    },
+                    { text: "Supportive and collaborative.", house: "hufflepuff" },
+                    { text: "Quiet and thoughtful.", house: "ravenclaw" }
+                ]
+            },
+
+            // Question 15
+            {
+                question: "When teaching someone new:",
+                options: [
+                    { text: "Demonstrate boldly.", house: "gryffindor" },
+                    { text: "Explain strategy clearly.", house: "slytherin" },
+                    {
+                        text: "Support them patiently.", house: "hufflepuff",
+                        branchQuestions: [
+                            {
+                                question: "When helping others, what do you focus on most?",
+                                options: [
+                                    { text: "Caution and careful guidance.", house: "slytherin" },
+                                    { text: "Teamwork and collaboration.", house: "hufflepuff" },
+                                    { text: "Encouraging bold action.", house: "gryffindor" },
+                                    { text: "Analyzing and explaining concepts.", house: "ravenclaw" }
+                                ]
+                            }
+                        ]
+                    },
+                    { text: "Analyze concepts in depth.", house: "ravenclaw" }
+                ]
+            },
+
+            // Question 16
+            {
+                question: "How do you face fears?",
+                options: [
+                    { text: "Confront directly.", house: "gryffindor" },
+                    { text: "Plan carefully.", house: "slytherin" },
+                    { text: "Seek support from friends.", house: "hufflepuff" },
+                    {
+                        text: "Understand logically and reduce fear.", house: "ravenclaw",
+                        branchQuestions: [
+                            {
+                               question: "When tackling a challenge, what do you focus on most?",
+                                options: [
+                                    { text: "Research first.", house: "ravenclaw" },
+                                    { text: "Reflect internally.", house: "hufflepuff" },
+                                    { text: "Act immediately.", house: "gryffindor" },
+                                    { text: "Strategize a plan.", house: "slytherin" }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+
+            // Question 17
+            {
+                question: "How do you act in competitions?",
+                options: [
+                    { text: "Take risks to win.", house: "gryffindor" },
+                    { 
+                        text: "Strategize to maximize advantage.", house: "slytherin",
+                        branchQuestions: [
+                            {
+                                question: "When strategizing, what do you prioritize?",
+                                options: [
+                                    { text: "Efficiency and results.", house: "slytherin" },
+                                    { text: "Learning from every move.", house: "ravenclaw" },
+                                    { text: "Supporting teammates while competing.", house: "hufflepuff" },
+                                    { text: "Taking bold risks for victory.", house: "gryffindor" }
+                                ]
+                            }
+                        ]
+                    },
+                    { text: "Encourage fair play and teammates.", house: "hufflepuff" },
+                    { text: "Focus on learning and mastery.", house: "ravenclaw" }
+                ]
+            },
+
+            // Question 18
+            {
+                question: "How do you approach moral dilemmas?",
+                options: [
+                    { text: "Act courageously according to heart.", house: "gryffindor" },
+                    { 
+                        text: "Choose the most clever or advantageous.", house: "slytherin",
+                        branchQuestions: [
+                            {
+                                question: "When choosing advantage, what guides you most?",
+                                options: [
+                                    { text: "Maximizing personal gain.", house: "slytherin" },
+                                    { text: "Using logic to find the best solution.", house: "ravenclaw" },
+                                    { text: "Ensuring fairness for others.", house: "hufflepuff" },
+                                    { text: "Taking bold actions courageously.", house: "gryffindor" }
+                                ]
+                            }
+                        ]
+                    },
+                    { text: "Consider the well-being of everyone.", house: "hufflepuff" },
+                    { text: "Analyze and act logically.", house: "ravenclaw" }
+                ]
+            },
+
+            // Question 19
+            {
+                question: "Your favorite type of adventure:",
+                options: [
+                    { text: "Dangerous and thrilling.", house: "gryffindor" },
+                    { 
+                        text: "Strategic and planned.", house: "slytherin",
+                        branchQuestions: [
+                            {
+                                question: "When planning an adventure, what matters most?",
+                                options: [
+                                    { text: "Careful strategy and advantage.", house: "slytherin" },
+                                    { text: "Learning and understanding the world.", house: "ravenclaw" },
+                                    { text: "Sharing the journey with friends.", house: "hufflepuff" },
+                                    { text: "Taking bold risks for excitement.", house: "gryffindor" }
+                                ]
+                            }
+                        ]
+                    },
+                    { text: "Collaborative and meaningful.", house: "hufflepuff" },
+                    { text: "Intellectual and creative.", house: "ravenclaw" }
+                ]
+            },
+
+            // Question 20
+            {
+                question: "How do you behave in social events?",
+                options: [
+                    { text: "Start conversations and games.", house: "gryffindor" },
+                    {
+                        text: "Observe and influence subtly.", house: "slytherin",
+                        branchQuestions: [
+                            {
+                                question: "When handling a situation, what do you focus on most?",
+                                options: [
+                                    { text: "Observe quietly.", house: "ravenclaw" },
+                                    { text: "Influence directly.", house: "slytherin" },
+                                    { text: "Balance both.", house: "gryffindor" },
+                                    { text: "Interact collaboratively.", house: "hufflepuff" }
+                                ]
+                            }
+                        ]
+                    },
+                    { text: "Ensure everyone is included.", house: "hufflepuff" },
+                    { text: "Stick to small groups and discuss ideas.", house: "ravenclaw" }
+                ]
+            },
+            // Question 21
+            {
+                question: "How do you approach teamwork?",
+                options: [
+                    { text: "Lead boldly.", house: "gryffindor" },
+                    { text: "Strategize for efficiency.", house: "slytherin" },
+                    { text: "Support and motivate others.", house: "hufflepuff" },
+                    {
+                        text: "Provide insight and thoughtful input.", house: "ravenclaw",
+                        branchQuestions: [
+                            {
+                                question: "When leading a project, what do you focus on most?",
+                                options: [
+                                    { text: "Guide the team.", house: "gryffindor" },
+                                    { text: "Analyze carefully.", house: "ravenclaw" },
+                                    { text: "Encourage collaboration.", house: "hufflepuff" },
+                                    { text: "Optimize strategy.", house: "slytherin" }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+
+            // Question 22
+            {
+                question: "How do you explore mysteries?",
+                options: [
+                    { text: "Dive in courageously.", house: "gryffindor" },
+                    {
+                        text: "Plan carefully to solve.", house: "slytherin",
+                        branchQuestions: [
+                            {
+                                question: "When tackling a task, what do you focus on most?",
+                                options: [
+                                    { text: "Solo investigation.", house: "ravenclaw" },
+                                    { text: "Teamwork.", house: "hufflepuff" },
+                                    { text: "Mix both.", house: "slytherin" },
+                                    { text: "Act immediately.", house: "gryffindor" }
+                                ]
+                            }
+                        ]
+                    },
+                    { text: "Collaborate with others.", house: "hufflepuff" },
+                    { text: "Analyze all clues deeply.", house: "ravenclaw" }
+                ]
+            },
+
+            // Question 23
+            {
+                question: "How do you respond to mistakes?",
+                options: [
+                    { text: "Try again boldly.", house: "gryffindor" },
+                    { text: "Find a clever solution.", house: "slytherin" },
+                    { text: "Comfort and support others.", house: "hufflepuff" },
+                    {
+                        text: "Analyze and learn from it.", house: "ravenclaw",
+                        branchQuestions: [
+                            {
+                                question: "When facing a situation, what do you focus on most?",
+                                options: [
+                                    { text: "Understanding.", house: "ravenclaw" },
+                                    { text: "Prevention.", house: "slytherin" },
+                                    { text: "Support others.", house: "hufflepuff" },
+                                    { text: "Act boldly.", house: "gryffindor" }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+
+            // Question 24
+            {
+                question: "How do you react to success of others?",
+                options: [
+                    { text: "Celebrate their courage.", house: "gryffindor" },
+                    { 
+                        text: "Learn from their strategy.", house: "slytherin",
+                        branchQuestions: [
+                            {
+                                question: "When learning from others, what is your focus?",
+                                options: [
+                                    { text: "Adopt their methods wisely.", house: "slytherin" },
+                                    { text: "Analyze reasoning behind it.", house: "ravenclaw" },
+                                    { text: "Encourage and help them more.", house: "hufflepuff" },
+                                    { text: "Be inspired to act boldly myself.", house: "gryffindor" }
+                                ]
+                            }
+                        ]
+                    },
+                    { text: "Support and encourage them.", house: "hufflepuff" },
+                    { text: "Understand the reasoning behind it.", house: "ravenclaw" }
+                ]
+            },
+
+            // Question 25
+            {
+                question: "How do you handle long-term goals?",
+                options: [
+                    { text: "Take bold steps and adapt.", house: "gryffindor" },
+                    { text: "Plan strategically and efficiently.", house: "slytherin" },
+                    { text: "Collaborate and support the team.", house: "hufflepuff" },
+                    {
+                        text: "Analyze each step carefully.", house: "ravenclaw",
+                        branchQuestions: [
+                            {
+                                question: "When managing tasks, what do you focus on most?",
+                                options: [
+                                    { text: "Set milestones.", house: "ravenclaw" },
+                                    { text: "Stay flexible.", house: "gryffindor" },
+                                    { text: "Work collaboratively.", house: "hufflepuff" },
+                                    { text: "Optimize strategically.", house: "slytherin" }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+
+            // Question 26
+            {
+                question: "When helping a stranger:",
+                options: [
+                    { text: "Act boldly.", house: "gryffindor" },
+                    { 
+                        text: "Find a smart way to help.", house: "slytherin",
+                        branchQuestions: [
+                            {
+                                question: "When helping strategically, what is your priority?",
+                                options: [
+                                    { text: "Maximizing effectiveness.", house: "slytherin" },
+                                    { text: "Ensuring safety and fairness.", house: "hufflepuff" },
+                                    { text: "Learning from the situation.", house: "ravenclaw" },
+                                    { text: "Taking bold initiative immediately.", house: "gryffindor" }
+                                ]
+                            }
+                        ]
+                    },
+                    { text: "Ensure they feel supported.", house: "hufflepuff" },
+                    { text: "Analyze carefully before acting.", house: "ravenclaw" }
+                ]
+            },
+
+            // Question 27
+            {
+                question: "How do you handle criticism?",
+                options: [
+                    { text: "Brush it off and keep going.", house: "gryffindor" },
+                    { text: "Learn strategically from it.", house: "slytherin" },
+                    {
+                        text: "Adjust kindly and consider others.", house: "hufflepuff",
+                        branchQuestions: [
+                            {
+                                question: "When making decisions, what do you focus on most?",
+                                options: [
+                                    { text: "Private reflection.", house: "ravenclaw" },
+                                    { text: "Open discussion.", house: "hufflepuff" },
+                                    { text: "Act boldly.", house: "gryffindor" },
+                                    { text: "Plan strategically.", house: "slytherin" }
+                                ]
+                            }
+                        ]
+                    },
+                    { text: "Reflect logically and improve.", house: "ravenclaw" }
+                ]
+            },
+
+            // Question 28
+            {
+                question: "Your friends describe you as:",
+                options: [
+                    { text: "Brave and daring.", house: "gryffindor" },
+                    { 
+                        text: "Clever and strategic.", house: "slytherin",
+                        branchQuestions: [
+                            {
+                                question: "When using strategy, what do you focus on most?",
+                                options: [
+                                    { text: "Achieving the best outcome.", house: "slytherin" },
+                                    { text: "Thinking logically through problems.", house: "ravenclaw" },
+                                    { text: "Helping others succeed.", house: "hufflepuff" },
+                                    { text: "Taking bold and daring actions.", house: "gryffindor" }
+                                ]
+                            }
+                        ]
+                    },
+                    { text: "Caring and reliable.", house: "hufflepuff" },
+                    { text: "Wise and thoughtful.", house: "ravenclaw" }
+                ]
+            },
+
+            // Question 29
+            {
+                question: "How do you approach creative projects?",
+                options: [
+                    { text: "Experiment boldly.", house: "gryffindor" },
+                    { text: "Plan and optimize.", house: "slytherin" },
+                    { text: "Collaborate and support.", house: "hufflepuff" },
+                    {
+                        text: "Study and refine carefully.", house: "ravenclaw",
+                        branchQuestions: [
+                            {
+                                question: "When approaching a task, what do you focus on most?",
+                                options: [
+                                    { text: "Trial-and-error.", house: "gryffindor" },
+                                    { text: "Careful analysis.", house: "ravenclaw" },
+                                    { text: "Collaborative testing.", house: "hufflepuff" },
+                                    { text: "Strategic planning.", house: "slytherin" }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+
+            // Question 30
+            {
+                question: "When solving puzzles or riddles:",
+                options: [
+                    { text: "Try boldly and adjust.", house: "gryffindor" },
+                    {
+                        text: "Look for clever shortcuts.", house: "slytherin",
+                        branchQuestions: [
+                            {
+                                question: "When making decisions, what do you focus on most?",
+                                options: [
+                                    { text: "Intuition.", house: "gryffindor" },
+                                    { text: "Methodical logic.", house: "ravenclaw" },
+                                    { text: "Collaborate.", house: "hufflepuff" },
+                                    { text: "Plan strategically.", house: "slytherin" }
+                                ]
+                            }
+                        ]
+                    },
+                    { text: "Solve with friends.", house: "hufflepuff" },
+                    { text: "Analyze all possibilities.", house: "ravenclaw" }
+                ]
+            }
+        ];
+        let houseScores = { gryffindor: 0, slytherin: 0, hufflepuff: 0, ravenclaw: 0 };
+        let currentIndex = 0;
+        let allQuestions = [];
+
+        // ✅ Function to build quiz questions (always includes 1 visual + 14 others)
+        function buildQuizQuestions() {
+            const visualQuestions = questions.filter(q => q.visual);
+            const nonVisual = questions.filter(q => !q.visual);
+
+            // Shuffle both pools
+            const shuffledVisual = shuffleArray(visualQuestions);
+            const shuffledNonVisual = shuffleArray(nonVisual);
+
+            const totalQuestions = 15;
+            let selectedQuestions = [];
+
+            // Always pick 1 visual first
+            if (shuffledVisual.length > 0) {
+                selectedQuestions.push(shuffledVisual.pop());
+            }
+
+            // Fill the rest randomly from all questions
+            const remainingPool = shuffleArray([...shuffledVisual, ...shuffledNonVisual]);
+
+            selectedQuestions.push(...remainingPool.slice(0, totalQuestions - selectedQuestions.length));
+
+            // Final shuffle so the first visual isn't always first
+            return shuffleArray(selectedQuestions);
+        }
+
+
+
+        // Initialize questions
+        allQuestions = buildQuizQuestions();
+
+        function displayQuestion(question) {
+            const questionEl = document.getElementById('question');
+            const optionsEl = document.getElementById('options');
+            questionEl.innerHTML = '';
+            optionsEl.innerHTML = '';
+
+            // Apply correct layout class
+            if (question.visual) {
+                optionsEl.className = 'options visual-options';
+            } else {
+                optionsEl.className = 'options';
+            }
+
+            // Display question text
+            questionEl.textContent = question.question;
+
+            // Shuffle options
+            const shuffledOptions = shuffleArray(question.options.slice());
+
+            shuffledOptions.forEach(option => {
+                const optionDiv = document.createElement('div');
+                optionDiv.className = 'option';
+
+                if (question.visual && option.image) {
+                    optionDiv.className = 'photo-card'; // 👈 make option itself the card
+                    optionDiv.innerHTML = `
+        <div class="card-image" style="background-image:url('${option.image}')"></div>
+        <div class="card-text">${option.text}</div>
+    `;
+                } else {
+                    optionDiv.textContent = option.text;
+                }
+
+
+                optionDiv.onclick = () => handleAnswer(option);
+                optionsEl.appendChild(optionDiv);
+            });
+
+            // Update progress
+            const progressBar = document.getElementById('progress-bar');
+            progressBar.style.width = ((currentIndex) / allQuestions.length * 100) + '%';
+        }
+
+        function handleAnswer(option) {
+            houseScores[option.house]++;
+
+            if (option.branchQuestions && option.branchQuestions.length > 0) {
+                allQuestions.splice(currentIndex + 1, 0, ...option.branchQuestions);
+            }
+
+            currentIndex++;
+            if (currentIndex >= allQuestions.length) {
+                showResults();
+            } else {
+                displayQuestion(allQuestions[currentIndex]);
+            }
+        }
+
+        function showResults() {
+            document.getElementById('main-quiz-card').style.display = 'none';
+            const resultContainer = document.getElementById('result-container');
+            resultContainer.style.display = 'block';
+
+            let maxHouse = Object.keys(houseScores).reduce((a, b) => houseScores[a] > houseScores[b] ? a : b);
+            const houseCrest = document.getElementById('house-crest');
+            const houseName = document.getElementById('house-name');
+            const houseDescription = document.getElementById('house-description');
+
+            const houseImages = {
+                gryffindor: "https://i.pinimg.com/736x/a4/14/3a/a4143a7509b8b4de5aa37d694078742c.jpg",
+                slytherin: "https://i.pinimg.com/736x/0c/a5/65/0ca565b357b034bb8adc4302d02e1f24.jpg",
+                hufflepuff: "https://i.pinimg.com/736x/40/89/fc/4089fcac935b9fd61d34018929a8440f.jpg",
+                ravenclaw: "https://i.pinimg.com/1200x/be/6f/b4/be6fb43c13896d8b0b20a29ce9e7f66f.jpg"
+            };
+
+            houseCrest.src = houseImages[maxHouse];
+            houseCrest.alt = `${maxHouse} crest`;
+
+            houseName.textContent = maxHouse.charAt(0).toUpperCase() + maxHouse.slice(1);
+            houseDescription.textContent = `Congratulations! You belong to ${maxHouse} house.`;
+        }
+
+
+
+        function restartQuiz() {
+            houseScores = { gryffindor: 0, slytherin: 0, hufflepuff: 0, ravenclaw: 0 };
+            currentIndex = 0;
+
+            // ✅ Rebuild with at least 1 visual
+            allQuestions = buildQuizQuestions();
+
+            document.getElementById('result-container').style.display = 'none';
+            document.getElementById('main-quiz-card').style.display = 'block';
+            displayQuestion(allQuestions[currentIndex]);
+        }
+
+        // Start the quiz
+        displayQuestion(allQuestions[currentIndex]);
+
+    </script>
+</body>
+
+</html>
