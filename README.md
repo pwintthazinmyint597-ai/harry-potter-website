@@ -17,16 +17,16 @@ After answering the questions, the website calculates the result and displays th
 
 
 ## ✨ Features
-
-- Harry Potter-themed user interface
-- User login/profile interface
-- Character profile selection
-- Hogwarts House navigation
-- Interactive House quiz
-- House result display
-- Character information
-- Dynamic website interactions
-- Responsive web design
+🏰 Harry Potter-themed Homepage
+🧙 Character Information
+🏠 Hogwarts Houses
+🪄 Interactive User Interface
+🎮 Harry Potter-themed Game
+🧩 Interactive Game Features
+🎨 Harry Potter-inspired Design
+⚡ JavaScript Interactions
+📱 Responsive Web Layout
+🖱️ Interactive Buttons and Navigation
 
 ## 🛠️ Technologies Used
 
