@@ -15,15 +15,18 @@ The quiz includes the four Hogwarts Houses:
 
 After answering the questions, the website calculates the result and displays the House that best matches the user's answers.
 
+
 ## ✨ Features
 
-- Interactive Harry Potter-themed quiz
-- Multiple-choice questions
-- Automatic House result calculation
-- Hogwarts House result display
-- Harry Potter-themed design
-- Simple and user-friendly interface
-- Interactive JavaScript functionality
+- Harry Potter-themed user interface
+- User login/profile interface
+- Character profile selection
+- Hogwarts House navigation
+- Interactive House quiz
+- House result display
+- Character information
+- Dynamic website interactions
+- Responsive web design
 
 ## 🛠️ Technologies Used
 
